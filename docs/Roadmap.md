@@ -10,12 +10,12 @@ criterion. When working a task, name it by number in the Claude Code prompt
 
 **Goal:** a signed-in user lands on an empty dashboard.
 
-- **1.1** Repo + Next.js skeleton, pnpm workspace (30 min)
-- **1.2** Neon Postgres + Drizzle schema (users, projects, project_users,
-  api_keys — no traces/spans yet) (1.5 hr)
-- **1.3** GitHub OAuth via Auth.js, Drizzle adapter (3 hr — hard timebox:
+- [x] **1.1** Repo + Next.js skeleton, pnpm workspace (30 min) — done 2026-04-25
+- [x] **1.2** Neon Postgres + Drizzle schema (users, projects, project_users,
+  api_keys — no traces/spans yet) (1.5 hr) — done 2026-04-25
+- [ ] **1.3** GitHub OAuth via Auth.js, Drizzle adapter (3 hr — hard timebox:
   bail to Clerk at 4 hr)
-- **1.4** Login gate + bare layout shell (1.5 hr)
+- [ ] **1.4** Login gate + bare layout shell (1.5 hr)
 
 **Exit criterion:** sign in with GitHub, land on `/dashboard`, see an empty
 state. Sign out works.
@@ -25,10 +25,10 @@ state. Sign out works.
 **Goal:** a public URL where a user can create a project and generate an
 API key.
 
-- **2.1** Project creation flow, server actions (1.5 hr)
-- **2.2** API key generation, hashed storage, show-once UI (2 hr)
-- **2.3** First raw LLM API call in a throwaway script (1.5 hr)
-- **2.4** Deploy to Vercel, production GitHub OAuth app (1 hr)
+- [ ] **2.1** Project creation flow, server actions (1.5 hr)
+- [ ] **2.2** API key generation, hashed storage, show-once UI (2 hr)
+- [ ] **2.3** First raw LLM API call in a throwaway script (1.5 hr)
+- [ ] **2.4** Deploy to Vercel, production GitHub OAuth app (1 hr)
 
 **Exit criterion:** a stranger can visit the production URL, sign in,
 create a project, generate an API key, and see the prefix in the
@@ -39,16 +39,16 @@ settings page.
 **Goal:** the first full vertical slice. Alex's code makes an LLM call,
 the span lands in Postgres, you can query it manually.
 
-- **3.1** Scaffold `packages/sdk` in the monorepo (30 min)
-- **3.2** `traces` and `spans` tables in Drizzle, migration (1 hr)
-- **3.3** `POST /v1/traces` route handler with Bearer auth, Zod
+- [ ] **3.1** Scaffold `packages/sdk` in the monorepo (30 min)
+- [ ] **3.2** `traces` and `spans` tables in Drizzle, migration (1 hr)
+- [ ] **3.3** `POST /v1/traces` route handler with Bearer auth, Zod
   validation, upsert transaction (3 hr)
-- **3.4** SDK: `trace()` with AsyncLocalStorage, ULID generation,
+- [ ] **3.4** SDK: `trace()` with AsyncLocalStorage, ULID generation,
   HTTP client, beforeExit drain (3 hr)
-- **3.5** SDK: `observeOpenAI()` proxy around chat.completions.create,
+- [ ] **3.5** SDK: `observeOpenAI()` proxy around chat.completions.create,
   token + cost capture (2 hr)
-- **3.6** SDK: `tool()` helper (1 hr)
-- **3.7** End-to-end smoke test: throwaway script with real OpenAI key +
+- [ ] **3.6** SDK: `tool()` helper (1 hr)
+- [ ] **3.7** End-to-end smoke test: throwaway script with real OpenAI key +
   local ingest; verify span rows in Postgres (1.5 hr)
 
 **Exit criterion:** running a test script calls OpenAI, triggers a POST to
@@ -58,11 +58,11 @@ the local ingest, and inserts correct rows in `traces` and `spans`.
 
 **Goal:** Alex can see his traces in the dashboard.
 
-- **5.1** Traces list page: paginated table, sort by started_at desc (2 hr)
-- **5.2** Columns: name, duration, status, span count, cost, started_at
+- [ ] **5.1** Traces list page: paginated table, sort by started_at desc (2 hr)
+- [ ] **5.2** Columns: name, duration, status, span count, cost, started_at
   (1 hr)
-- **5.3** Empty state + loading state (30 min)
-- **5.4** Basic filters: status, time range (1.5 hr)
+- [ ] **5.3** Empty state + loading state (30 min)
+- [ ] **5.4** Basic filters: status, time range (1.5 hr)
 
 **Exit criterion:** after running the test script a few times, the
 dashboard shows the traces in a sortable list.
@@ -71,12 +71,12 @@ dashboard shows the traces in a sortable list.
 
 **Goal:** the feature the whole project is built around.
 
-- **6.1** `/traces/[traceId]` route, fetch trace + spans server-side (1 hr)
-- **6.2** Waterfall SVG: time axis, span rows, color coding (6 hr)
-- **6.3** Span detail panel: input, output, metadata, timing (3 hr)
-- **6.4** Click-to-select interaction, keyboard nav (2 hr)
-- **6.5** Edge cases: very long traces, very short spans, failed spans (2 hr)
-- **6.6** Self-review against hero-screen bar: does this look shippable? (1 hr)
+- [ ] **6.1** `/traces/[traceId]` route, fetch trace + spans server-side (1 hr)
+- [ ] **6.2** Waterfall SVG: time axis, span rows, color coding (6 hr)
+- [ ] **6.3** Span detail panel: input, output, metadata, timing (3 hr)
+- [ ] **6.4** Click-to-select interaction, keyboard nav (2 hr)
+- [ ] **6.5** Edge cases: very long traces, very short spans, failed spans (2 hr)
+- [ ] **6.6** Self-review against hero-screen bar: does this look shippable? (1 hr)
 
 **Exit criterion:** clicking any trace in the list opens a detail view
 where the waterfall reads correctly at a glance and clicking a span
@@ -86,13 +86,13 @@ reveals its full input/output.
 
 **Goal:** a stranger could actually install and use the SDK.
 
-- **8.1** Publish SDK to npm under a real name (1 hr)
-- **8.2** SDK README: install, 5-line quickstart, API reference (2 hr)
-- **8.3** SDK error cases: 401 loud log, 4xx drop, 5xx drop, network
+- [ ] **8.1** Publish SDK to npm under a real name (1 hr)
+- [ ] **8.2** SDK README: install, 5-line quickstart, API reference (2 hr)
+- [ ] **8.3** SDK error cases: 401 loud log, 4xx drop, 5xx drop, network
   errors (1.5 hr)
-- **8.4** Manual end-to-end: install from npm in a fresh project,
+- [ ] **8.4** Manual end-to-end: install from npm in a fresh project,
   integrate, confirm traces appear (1 hr)
-- **8.5** First real tests: SDK unit tests for trace/tool context
+- [ ] **8.5** First real tests: SDK unit tests for trace/tool context
   propagation (2 hr)
 
 **Exit criterion:** `npm install @yourname/sdk`, follow README, traces
@@ -102,12 +102,12 @@ appear in production dashboard.
 
 **Goal:** the product doesn't fall over when used for real.
 
-- **9.1** Ingest: reject malformed payloads clearly, log request IDs (1.5 hr)
-- **9.2** Dashboard: handle large traces (100+ spans) without layout
+- [ ] **9.1** Ingest: reject malformed payloads clearly, log request IDs (1.5 hr)
+- [ ] **9.2** Dashboard: handle large traces (100+ spans) without layout
   breakage (2 hr)
-- **9.3** Dashboard: handle jsonb input/output rendering (collapsible,
+- [ ] **9.3** Dashboard: handle jsonb input/output rendering (collapsible,
   truncate very large values) (2 hr)
-- **9.4** Revoke key flow: UI + server action + ingest check (1 hr)
+- [ ] **9.4** Revoke key flow: UI + server action + ingest check (1 hr)
 
 **Exit criterion:** run an intentionally broken integration (bad key,
 malformed payload, oversize span) and get useful errors, not crashes.
@@ -116,10 +116,10 @@ malformed payload, oversize span) and get useful errors, not crashes.
 
 **Goal:** the product is useful beyond the default happy path.
 
-- **10.1** SDK: custom metadata on traces (user-supplied tags) (1.5 hr)
-- **10.2** Dashboard: surface metadata in list view as filter chips (2 hr)
-- **10.3** SDK: `observeAnthropic()` equivalent (2 hr)
-- **10.4** Cost rollups: project-level totals in the dashboard header (2 hr)
+- [ ] **10.1** SDK: custom metadata on traces (user-supplied tags) (1.5 hr)
+- [ ] **10.2** Dashboard: surface metadata in list view as filter chips (2 hr)
+- [ ] **10.3** SDK: `observeAnthropic()` equivalent (2 hr)
+- [ ] **10.4** Cost rollups: project-level totals in the dashboard header (2 hr)
 
 **Exit criterion:** an Anthropic-based agent integrates as easily as an
 OpenAI one, and metadata-based filtering works in the list.
@@ -128,11 +128,11 @@ OpenAI one, and metadata-based filtering works in the list.
 
 **Goal:** it looks like a real product, not a school project.
 
-- **11.1** Typography, spacing, color pass across all screens (3 hr)
-- **11.2** Dark mode (2 hr)
-- **11.3** Loading states, empty states, error boundaries everywhere
+- [ ] **11.1** Typography, spacing, color pass across all screens (3 hr)
+- [ ] **11.2** Dark mode (2 hr)
+- [ ] **11.3** Loading states, empty states, error boundaries everywhere
   (2 hr)
-- **11.4** Landing page with a real pitch (2 hr)
+- [ ] **11.4** Landing page with a real pitch (2 hr)
 
 **Exit criterion:** screenshots would look fine in a portfolio.
 
@@ -140,13 +140,13 @@ OpenAI one, and metadata-based filtering works in the list.
 
 **Goal:** ship.
 
-- **12.1** Dogfood: instrument a real agent for a week, fix what breaks
+- [ ] **12.1** Dogfood: instrument a real agent for a week, fix what breaks
   (ongoing through the week)
-- **12.2** Main README: what it is, screenshots, how it works,
+- [ ] **12.2** Main README: what it is, screenshots, how it works,
   architecture diagram (3 hr)
-- **12.3** Phase 2 writeup: ClickHouse migration plan in
+- [ ] **12.3** Phase 2 writeup: ClickHouse migration plan in
   `docs/phase-2.md` (2 hr)
-- **12.4** Tag v0.1.0, announce (if announcing at all) (1 hr)
+- [ ] **12.4** Tag v0.1.0, announce (if announcing at all) (1 hr)
 
 **Exit criterion:** July 19. Ship. Stop adding features.
 
