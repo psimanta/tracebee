@@ -25,3 +25,5 @@ out/
 
 # drizzle
 apps/web/drizzle/meta/_journal.json.bak
+
+.claude/
