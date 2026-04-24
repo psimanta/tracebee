@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+.pnp.*
+
+# env
+.env
+.env.local
+.env.*.local
+
+# build output
+.next/
+dist/
+build/
+out/
+
+# misc
+.DS_Store
+*.log
+.vercel
+.turbo
+
+# editor
+.vscode/
+.idea/
+
+# drizzle
+apps/web/drizzle/meta/_journal.json.bak
