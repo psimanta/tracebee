@@ -13,8 +13,8 @@ criterion. When working a task, name it by number in the Claude Code prompt
 - [x] **1.1** Repo + Next.js skeleton, pnpm workspace (30 min) — done 2026-04-25
 - [x] **1.2** Neon Postgres + Drizzle schema (users, projects, project_users,
   api_keys — no traces/spans yet) (1.5 hr) — done 2026-04-25
-- [ ] **1.3** GitHub OAuth via Auth.js, Drizzle adapter (3 hr — hard timebox:
-  bail to Clerk at 4 hr)
+- [x] **1.3** GitHub OAuth via Auth.js, Drizzle adapter (3 hr — hard timebox:
+  bail to Clerk at 4 hr) — done 2026-04-25
 - [ ] **1.4** Login gate + bare layout shell (1.5 hr)
 
 **Exit criterion:** sign in with GitHub, land on `/dashboard`, see an empty

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Variant E: Three small hexagons forming bee silhouette: 2 wings + 1 body. Plus antennae. -->
+
+  <g fill="#E8A032" stroke="#2B2B2B" stroke-width="6" stroke-linejoin="round">
+    <!-- Left wing hex (small, tilted left) -->
+    <polygon points="80,128 108,144 108,176 80,192 52,176 52,144"/>
+    <!-- Right wing hex (small, tilted right) -->
+    <polygon points="176,128 204,144 204,176 176,192 148,176 148,144"/>
+    <!-- Center body hex (larger, centered) -->
+    <polygon points="128,90 168,114 168,162 128,186 88,162 88,114" fill="#2B2B2B"/>
+  </g>
+
+  <!-- Antennae from top of center hex -->
+  <g fill="#2B2B2B" stroke="#2B2B2B" stroke-width="6" stroke-linecap="round">
+    <line x1="116" y1="92" x2="104" y2="68"/>
+    <line x1="140" y1="92" x2="152" y2="68"/>
+    <circle cx="104" cy="68" r="5"/>
+    <circle cx="152" cy="68" r="5"/>
+  </g>
+
+  <!-- Two amber stripes across center body hex -->
+  <defs>
+    <clipPath id="bodyClip">
+      <polygon points="128,90 168,114 168,162 128,186 88,162 88,114"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#bodyClip)">
+    <rect x="80" y="128" width="100" height="8" fill="#E8A032"/>
+    <rect x="80" y="148" width="100" height="8" fill="#E8A032"/>
+  </g>
+</svg>
