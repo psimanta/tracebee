@@ -39,14 +39,16 @@ export default async function DashboardPage() {
       ) : (
         <ul className="mt-6 divide-y divide-neutral-200 border-y border-neutral-200">
           {rows.map((p) => (
-            <li
-              key={p.id}
-              className="flex items-center justify-between py-3"
-            >
-              <span className="text-sm font-medium">{p.name}</span>
-              <span className="text-xs text-neutral-500">
-                {p.createdAt.toLocaleDateString()}
-              </span>
+            <li key={p.id}>
+              <Link
+                href={`/dashboard/${p.id}/settings`}
+                className="flex items-center justify-between py-3 hover:bg-neutral-50"
+              >
+                <span className="text-sm font-medium">{p.name}</span>
+                <span className="text-xs text-neutral-500">
+                  {p.createdAt.toLocaleDateString()}
+                </span>
+              </Link>
             </li>
           ))}
         </ul>
