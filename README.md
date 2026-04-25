@@ -2,7 +2,7 @@
 
 Open-source observability for LLM agents. TypeScript SDK + dashboard for tracing, debugging, and understanding what your agents actually do.
 
-**Status:** Week 1 of 12 — foundation in progress. MVP target: July 19, 2026.
+**Status:** Week 1 of 12 complete — foundation done (auth, DB, schema). MVP target: July 19, 2026.
 
 ## Local development
 

@@ -15,7 +15,7 @@ criterion. When working a task, name it by number in the Claude Code prompt
   api_keys — no traces/spans yet) (1.5 hr) — done 2026-04-25
 - [x] **1.3** GitHub OAuth via Auth.js, Drizzle adapter (3 hr — hard timebox:
   bail to Clerk at 4 hr) — done 2026-04-25
-- [ ] **1.4** Login gate + bare layout shell (1.5 hr)
+- [x] **1.4** Login gate + bare layout shell (1.5 hr) — done 2026-04-25
 
 **Exit criterion:** sign in with GitHub, land on `/dashboard`, see an empty
 state. Sign out works.
