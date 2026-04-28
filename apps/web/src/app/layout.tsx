@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Tracebee",
   description: "Open-source observability for LLM agents",
+  icons: { icon: "/logo.svg" },
 };
 
 export default function RootLayout({

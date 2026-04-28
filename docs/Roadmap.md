@@ -27,7 +27,7 @@ API key.
 
 - [x] **2.1** Project creation flow, server actions (1.5 hr) — done 2026-04-25
 - [x] **2.2** API key generation, hashed storage, show-once UI (2 hr) — done 2026-04-26
-- [ ] **2.3** First raw LLM API call in a throwaway script (1.5 hr)
+- [x] **2.3** First raw LLM API call in a throwaway script (1.5 hr) — done 2026-04-26
 - [ ] **2.4** Deploy to Vercel, production GitHub OAuth app (1 hr)
 
 **Exit criterion:** a stranger can visit the production URL, sign in,
