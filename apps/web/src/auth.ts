@@ -18,10 +18,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   }),
   providers: [
     GitHub({
-      allowDangerousEmailAccountLinking: true,
       profile(profile) {
         return {
-          id: crypto.randomUUID(),
+          id: String(profile.id),
           name: profile.name ?? profile.login,
           email: profile.email,
           image: profile.avatar_url,

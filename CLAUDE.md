@@ -113,3 +113,8 @@ haven't told you which task, ask — don't guess. If a task needs a decision
 that isn't covered by this file or the architecture doc, ask before writing
 code. Don't add dependencies without asking. Don't refactor code outside the
 current task's scope.
+
+Walk me through changes step by step. Explain what you're about to do and
+why, then wait for me to say go before editing files, running commands, or
+modifying the database. This applies even to tasks that are fully spec'd in
+the roadmap — I'm using this project to learn, not to ship fast.
