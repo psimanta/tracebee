@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { and, count, desc, eq, sql, sum } from "drizzle-orm";
+import { and, count, desc, eq, gte, sql, sum, type SQL } from "drizzle-orm";
 import { db } from "@/db/client";
 import { spans, traces } from "@/db/schema";
 import { requireProjectAccess } from "@/lib/access";
@@ -8,25 +8,75 @@ import { formatDuration, formatRelativeTime } from "@/lib/format";
 
 const PAGE_SIZE = 50;
 
+type StatusFilter = "ok" | "error";
+type RangeFilter = "1h" | "24h" | "7d" | "30d";
+
+const RANGE_MS: Record<RangeFilter, number> = {
+  "1h": 3_600_000,
+  "24h": 86_400_000,
+  "7d": 7 * 86_400_000,
+  "30d": 30 * 86_400_000,
+};
+
+function parseStatus(v: string | undefined): StatusFilter | null {
+  return v === "ok" || v === "error" ? v : null;
+}
+
+function parseRange(v: string | undefined): RangeFilter | null {
+  return v === "1h" || v === "24h" || v === "7d" || v === "30d" ? v : null;
+}
+
+function rangeToSince(
+  r: RangeFilter | null,
+  now: Date = new Date(),
+): Date | null {
+  if (!r) return null;
+  return new Date(now.getTime() - RANGE_MS[r]);
+}
+
 export default async function TracesPage({
   params,
   searchParams,
 }: {
   params: Promise<{ projectId: string }>;
-  searchParams: Promise<{ cursor?: string }>;
+  searchParams: Promise<{
+    cursor?: string;
+    status?: string;
+    range?: string;
+  }>;
 }) {
   const { projectId } = await params;
-  const { cursor: cursorParam } = await searchParams;
+  const sp = await searchParams;
   const { project } = await requireProjectAccess(projectId);
-  const cursor = decodeCursor(cursorParam);
 
-  const projectFilter = eq(traces.projectId, projectId);
-  const where = cursor
-    ? and(
-        projectFilter,
-        sql`(${traces.startedAt}, ${traces.id}) < (${cursor.startedAt}::timestamptz, ${cursor.id})`,
-      )
-    : projectFilter;
+  const cursor = decodeCursor(sp.cursor);
+  const status = parseStatus(sp.status);
+  const range = parseRange(sp.range);
+  const since = rangeToSince(range);
+  const filtersActive = status !== null || range !== null;
+
+  const buildUrl = (next: {
+    status?: StatusFilter | null;
+    range?: RangeFilter | null;
+    cursor?: string | null;
+  }) => {
+    const usp = new URLSearchParams();
+    if (next.status) usp.set("status", next.status);
+    if (next.range) usp.set("range", next.range);
+    if (next.cursor) usp.set("cursor", next.cursor);
+    const q = usp.toString();
+    return `/dashboard/${projectId}/traces${q ? `?${q}` : ""}`;
+  };
+
+  const wheres: SQL[] = [eq(traces.projectId, projectId)];
+  if (status) wheres.push(eq(traces.status, status));
+  if (since) wheres.push(gte(traces.startedAt, since));
+  if (cursor) {
+    wheres.push(
+      sql`(${traces.startedAt}, ${traces.id}) < (${cursor.startedAt}::timestamptz, ${cursor.id})`,
+    );
+  }
+  const where = and(...wheres);
 
   const rows = await db
     .select({
@@ -79,8 +129,91 @@ export default async function TracesPage({
         </Link>
       </nav>
 
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+        <div className="flex items-center gap-1">
+          <span className="mr-1 text-neutral-500">Status:</span>
+          <FilterPill href={buildUrl({ range })} active={status === null}>
+            All
+          </FilterPill>
+          <FilterPill
+            href={buildUrl({ status: "ok", range })}
+            active={status === "ok"}
+          >
+            OK
+          </FilterPill>
+          <FilterPill
+            href={buildUrl({ status: "error", range })}
+            active={status === "error"}
+          >
+            Error
+          </FilterPill>
+        </div>
+
+        <div className="flex items-center gap-1">
+          <span className="mr-1 text-neutral-500">Range:</span>
+          <FilterPill
+            href={buildUrl({ status, range: "1h" })}
+            active={range === "1h"}
+          >
+            1h
+          </FilterPill>
+          <FilterPill
+            href={buildUrl({ status, range: "24h" })}
+            active={range === "24h"}
+          >
+            24h
+          </FilterPill>
+          <FilterPill
+            href={buildUrl({ status, range: "7d" })}
+            active={range === "7d"}
+          >
+            7d
+          </FilterPill>
+          <FilterPill
+            href={buildUrl({ status, range: "30d" })}
+            active={range === "30d"}
+          >
+            30d
+          </FilterPill>
+          <FilterPill href={buildUrl({ status })} active={range === null}>
+            All
+          </FilterPill>
+        </div>
+      </div>
+
       {pageRows.length === 0 ? (
-        <p className="mt-8 text-sm text-neutral-600">No traces yet.</p>
+        filtersActive ? (
+          <div className="mt-12 flex flex-col items-center rounded-lg border border-dashed border-neutral-300 px-6 py-12 text-center">
+            <h2 className="text-base font-semibold text-neutral-900">
+              No traces match these filters
+            </h2>
+            <p className="mt-2 max-w-sm text-sm text-neutral-600">
+              Try a wider time range or a different status.
+            </p>
+            <Link
+              href={buildUrl({})}
+              className="mt-5 rounded bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800"
+            >
+              Clear filters
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-12 flex flex-col items-center rounded-lg border border-dashed border-neutral-300 px-6 py-12 text-center">
+            <h2 className="text-base font-semibold text-neutral-900">
+              No traces yet
+            </h2>
+            <p className="mt-2 max-w-sm text-sm text-neutral-600">
+              Generate an API key in Settings and integrate the SDK to start
+              sending traces.
+            </p>
+            <Link
+              href={`/dashboard/${projectId}/settings`}
+              className="mt-5 rounded bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800"
+            >
+              Go to Settings
+            </Link>
+          </div>
+        )
       ) : (
         <table className="mt-8 w-full text-sm">
           <thead>
@@ -138,7 +271,7 @@ export default async function TracesPage({
       {hasNext && nextCursor ? (
         <div className="mt-6">
           <Link
-            href={`/dashboard/${projectId}/traces?cursor=${encodeURIComponent(nextCursor)}`}
+            href={buildUrl({ status, range, cursor: nextCursor })}
             className="text-sm text-neutral-700 hover:text-neutral-900"
           >
             Next →
@@ -146,5 +279,28 @@ export default async function TracesPage({
         </div>
       ) : null}
     </div>
+  );
+}
+
+function FilterPill({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={
+        active
+          ? "rounded bg-neutral-900 px-2 py-1 text-white"
+          : "rounded px-2 py-1 text-neutral-700 hover:bg-neutral-100"
+      }
+    >
+      {children}
+    </Link>
   );
 }
