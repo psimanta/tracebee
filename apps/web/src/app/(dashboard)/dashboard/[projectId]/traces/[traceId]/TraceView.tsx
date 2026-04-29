@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import type { spans as spansTable } from "@/db/schema";
 import { SpanDetail } from "./SpanDetail";
 import { Waterfall } from "./Waterfall";
@@ -13,6 +13,11 @@ export function TraceView({ spans }: { spans: Span[] }) {
 
   const selectedIndex = spans.findIndex((s) => s.id === selectedId);
   const selectedSpan = selectedIndex >= 0 ? spans[selectedIndex]! : spans[0]!;
+
+  useEffect(() => {
+    const el = document.getElementById(`waterfall-row-${selectedId}`);
+    el?.scrollIntoView({ block: "nearest", behavior: "instant" });
+  }, [selectedId]);
 
   const handleSelect = (id: string) => {
     setSelectedId(id);
@@ -32,12 +37,12 @@ export function TraceView({ spans }: { spans: Span[] }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
       <div
         ref={wrapperRef}
         tabIndex={0}
         onKeyDown={handleKeyDown}
-        className="rounded outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        className="rounded outline-none focus-visible:ring-2 focus-visible:ring-blue-500 lg:sticky lg:top-4 lg:flex-1 lg:min-w-0"
       >
         <Waterfall
           spans={spans}
@@ -45,7 +50,9 @@ export function TraceView({ spans }: { spans: Span[] }) {
           onSelect={handleSelect}
         />
       </div>
-      <SpanDetail span={selectedSpan} />
+      <div className="lg:w-96 lg:shrink-0">
+        <SpanDetail span={selectedSpan} />
+      </div>
     </div>
   );
 }

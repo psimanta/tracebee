@@ -62,7 +62,7 @@ export function Waterfall({
   });
 
   return (
-    <div className="overflow-x-auto">
+    <div className="max-h-[600px] overflow-auto">
       <svg width={TOTAL_WIDTH} height={totalHeight} className="text-xs">
         {ticks.map((t, i) => (
           <g key={`tick-${i}`}>
@@ -108,7 +108,7 @@ export function Waterfall({
           const isSelected = span.id === selectedId;
 
           return (
-            <g key={span.id}>
+            <g key={span.id} id={`waterfall-row-${span.id}`}>
               <title>{`${span.name} — ${durationLabel}`}</title>
               <rect
                 x={0}

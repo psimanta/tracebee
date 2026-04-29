@@ -35,6 +35,8 @@ export default async function TraceDetailPage({
     ? formatDuration(traceRow.endedAt.getTime() - traceRow.startedAt.getTime())
     : "—";
 
+  const errorCount = spanRows.filter((s) => s.status === "error").length;
+
   return (
     <div className="mx-auto max-w-5xl">
       <Link
@@ -91,7 +93,14 @@ export default async function TraceDetailPage({
         </div>
       </dl>
 
-      <h2 className="mt-8 text-sm font-semibold text-neutral-900">Spans</h2>
+      <h2 className="mt-8 text-sm font-semibold text-neutral-900">
+        Spans
+        {errorCount > 0 ? (
+          <span className="ml-2 font-normal text-red-600">
+            · {errorCount} {errorCount === 1 ? "error" : "errors"}
+          </span>
+        ) : null}
+      </h2>
 
       {spanRows.length === 0 ? (
         <p className="mt-2 text-sm text-neutral-600">
