@@ -12,14 +12,24 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
   },
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "devDependencies": {
+    "@types/node": "^22.19.17",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "ulid": "^3.0.2"
   }
 }
