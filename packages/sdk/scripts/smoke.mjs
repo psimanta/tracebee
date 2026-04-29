@@ -1,15 +1,38 @@
-import { configure, trace } from "../dist/index.js";
+import { configure, observeOpenAI, trace } from "../dist/index.js";
 
 configure({
   apiKey: process.env.TRACEBEE_API_KEY,
   baseUrl: process.env.TRACEBEE_BASE_URL ?? "http://localhost:3000",
 });
 
-const result = await trace("smoke-run", async () => {
-  await new Promise((r) => setTimeout(r, 50));
-  return 42;
+const fakeOpenAI = {
+  chat: {
+    completions: {
+      async create(params) {
+        await new Promise((r) => setTimeout(r, 30));
+        return {
+          id: "chatcmpl-fake",
+          model: params.model,
+          choices: [
+            { index: 0, message: { role: "assistant", content: "hello!" } },
+          ],
+          usage: { prompt_tokens: 10, completion_tokens: 5, total_tokens: 15 },
+        };
+      },
+    },
+  },
+};
+
+const client = observeOpenAI(fakeOpenAI);
+
+const result = await trace("smoke-with-llm", async () => {
+  const res = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [{ role: "user", content: "hi" }],
+  });
+  return res.choices[0].message.content;
 });
 
-console.log("trace() returned:", result);
-console.log("waiting 1s for in-flight POST to drain...");
+console.log("trace returned:", result);
+console.log("waiting 1s for drain...");
 await new Promise((r) => setTimeout(r, 1000));
