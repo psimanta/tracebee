@@ -12,6 +12,23 @@ export function formatDuration(ms: number): string {
   return `${h}h ${m}m`;
 }
 
+export function formatCost(s: string | null): string {
+  if (s === null) return "—";
+  return `$${Number(s).toFixed(4)}`;
+}
+
+export function formatTimestamp(d: Date): string {
+  const pad = (n: number, w = 2) => String(n).padStart(w, "0");
+  const y = d.getFullYear();
+  const mo = pad(d.getMonth() + 1);
+  const da = pad(d.getDate());
+  const h = pad(d.getHours());
+  const mi = pad(d.getMinutes());
+  const s = pad(d.getSeconds());
+  const ms = pad(d.getMilliseconds(), 3);
+  return `${y}-${mo}-${da} ${h}:${mi}:${s}.${ms}`;
+}
+
 export function formatRelativeTime(date: Date, now: Date = new Date()): string {
   const diffMs = now.getTime() - date.getTime();
   const diffSec = Math.floor(diffMs / 1000);

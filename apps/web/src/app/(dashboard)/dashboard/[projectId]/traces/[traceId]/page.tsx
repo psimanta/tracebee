@@ -5,6 +5,8 @@ import { db } from "@/db/client";
 import { spans, traces } from "@/db/schema";
 import { requireProjectAccess } from "@/lib/access";
 import { formatDuration, formatRelativeTime } from "@/lib/format";
+import { SpanDetail } from "./SpanDetail";
+import { Waterfall } from "./Waterfall";
 
 export default async function TraceDetailPage({
   params,
@@ -97,40 +99,10 @@ export default async function TraceDetailPage({
           This trace has no spans.
         </p>
       ) : (
-        <table className="mt-2 w-full text-sm">
-          <thead>
-            <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-500">
-              <th className="py-2 pr-4 font-medium">Name</th>
-              <th className="py-2 pr-4 font-medium">Kind</th>
-              <th className="py-2 pr-4 font-medium">Status</th>
-              <th className="py-2 pr-4 font-medium">Duration</th>
-            </tr>
-          </thead>
-          <tbody>
-            {spanRows.map((s) => (
-              <tr key={s.id} className="border-b border-neutral-100">
-                <td className="py-2 pr-4 font-medium">{s.name}</td>
-                <td className="py-2 pr-4 text-neutral-700">{s.kind}</td>
-                <td className="py-2 pr-4">
-                  <span
-                    className={
-                      s.status === "error"
-                        ? "text-red-600"
-                        : "text-neutral-700"
-                    }
-                  >
-                    {s.status}
-                  </span>
-                </td>
-                <td className="py-2 pr-4 text-neutral-700">
-                  {s.durationMs !== null
-                    ? formatDuration(s.durationMs)
-                    : "—"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="mt-2 space-y-6">
+          <Waterfall spans={spanRows} />
+          {spanRows[0] ? <SpanDetail span={spanRows[0]} /> : null}
+        </div>
       )}
     </div>
   );
