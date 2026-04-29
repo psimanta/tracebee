@@ -1,4 +1,4 @@
-import { configure, observeOpenAI, trace } from "../dist/index.js";
+import { configure, observeOpenAI, tool, trace } from "../dist/index.js";
 
 configure({
   apiKey: process.env.TRACEBEE_API_KEY,
@@ -26,9 +26,16 @@ const fakeOpenAI = {
 const client = observeOpenAI(fakeOpenAI);
 
 const result = await trace("smoke-with-llm", async () => {
+  const weather = await tool("fetch-weather", async () => {
+    await new Promise((r) => setTimeout(r, 20));
+    return { city: "Bangalore", tempC: 28 };
+  });
+
   const res = await client.chat.completions.create({
     model: "gpt-4o-mini",
-    messages: [{ role: "user", content: "hi" }],
+    messages: [
+      { role: "user", content: `Weather is ${JSON.stringify(weather)}` },
+    ],
   });
   return res.choices[0].message.content;
 });

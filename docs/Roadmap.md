@@ -47,7 +47,7 @@ the span lands in Postgres, you can query it manually.
   HTTP client, beforeExit drain (3 hr) — done 2026-04-29
 - [x] **3.5** SDK: `observeOpenAI()` proxy around chat.completions.create,
   token + cost capture (2 hr) — done 2026-04-29
-- [ ] **3.6** SDK: `tool()` helper (1 hr)
+- [x] **3.6** SDK: `tool()` helper (1 hr) — done 2026-04-29
 - [ ] **3.7** End-to-end smoke test: throwaway script with real OpenAI key +
   local ingest; verify span rows in Postgres (1.5 hr)
 
