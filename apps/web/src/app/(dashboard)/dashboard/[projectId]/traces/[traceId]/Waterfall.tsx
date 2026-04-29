@@ -1,3 +1,5 @@
+"use client";
+
 import { formatDuration } from "@/lib/format";
 
 type WaterfallSpan = {
@@ -31,7 +33,15 @@ function truncate(s: string, max: number): string {
   return s.length <= max ? s : s.slice(0, max - 1) + "…";
 }
 
-export function Waterfall({ spans }: { spans: WaterfallSpan[] }) {
+export function Waterfall({
+  spans,
+  selectedId,
+  onSelect,
+}: {
+  spans: WaterfallSpan[];
+  selectedId: string;
+  onSelect: (id: string) => void;
+}) {
   if (spans.length === 0) return null;
 
   const t0 = Math.min(...spans.map((s) => s.startedAt.getTime()));
@@ -95,18 +105,20 @@ export function Waterfall({ spans }: { spans: WaterfallSpan[] }) {
             span.durationMs !== null ? formatDuration(span.durationMs) : "—";
           const nameColor = span.status === "error" ? "#dc2626" : "#374151";
 
+          const isSelected = span.id === selectedId;
+
           return (
             <g key={span.id}>
-              <title>
-                {span.name} {"—"} {durationLabel}
-              </title>
+              <title>{`${span.name} — ${durationLabel}`}</title>
               <rect
                 x={0}
                 y={y}
                 width={TOTAL_WIDTH}
                 height={ROW_HEIGHT}
-                fill="transparent"
+                fill={isSelected ? "#f3f4f6" : "transparent"}
+                className="cursor-pointer"
                 pointerEvents="all"
+                onClick={() => onSelect(span.id)}
               />
               <text
                 x={8}

@@ -5,8 +5,7 @@ import { db } from "@/db/client";
 import { spans, traces } from "@/db/schema";
 import { requireProjectAccess } from "@/lib/access";
 import { formatDuration, formatRelativeTime } from "@/lib/format";
-import { SpanDetail } from "./SpanDetail";
-import { Waterfall } from "./Waterfall";
+import { TraceView } from "./TraceView";
 
 export default async function TraceDetailPage({
   params,
@@ -99,9 +98,8 @@ export default async function TraceDetailPage({
           This trace has no spans.
         </p>
       ) : (
-        <div className="mt-2 space-y-6">
-          <Waterfall spans={spanRows} />
-          {spanRows[0] ? <SpanDetail span={spanRows[0]} /> : null}
+        <div className="mt-2">
+          <TraceView spans={spanRows} />
         </div>
       )}
     </div>
