@@ -39,8 +39,8 @@ settings page.
 **Goal:** the first full vertical slice. Alex's code makes an LLM call,
 the span lands in Postgres, you can query it manually.
 
-- [ ] **3.1** Scaffold `packages/sdk` in the monorepo (30 min)
-- [ ] **3.2** `traces` and `spans` tables in Drizzle, migration (1 hr)
+- [x] **3.1** Scaffold `packages/sdk` in the monorepo (30 min) — done 2026-04-29
+- [x] **3.2** `traces` and `spans` tables in Drizzle, migration (1 hr) — done 2026-04-29
 - [ ] **3.3** `POST /v1/traces` route handler with Bearer auth, Zod
   validation, upsert transaction (3 hr)
 - [ ] **3.4** SDK: `trace()` with AsyncLocalStorage, ULID generation,

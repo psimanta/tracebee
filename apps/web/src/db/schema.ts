@@ -2,6 +2,8 @@ import { sql } from "drizzle-orm";
 import {
   index,
   integer,
+  jsonb,
+  numeric,
   pgTable,
   primaryKey,
   text,
@@ -104,4 +106,49 @@ export const verificationTokens = pgTable(
     expires: timestamp("expires", { withTimezone: true, mode: "date" }).notNull(),
   },
   (t) => [primaryKey({ columns: [t.identifier, t.token] })],
+);
+
+export const traces = pgTable(
+  "traces",
+  {
+    id: text("id").primaryKey(),
+    projectId: text("project_id")
+      .notNull()
+      .references(() => projects.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    status: text("status").$type<"ok" | "error">().notNull().default("ok"),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull(),
+    endedAt: timestamp("ended_at", { withTimezone: true }),
+  },
+  (t) => [
+    index("traces_project_started_idx").on(t.projectId, t.startedAt),
+  ],
+);
+
+export const spans = pgTable(
+  "spans",
+  {
+    id: text("id").primaryKey(),
+    traceId: text("trace_id")
+      .notNull()
+      .references(() => traces.id, { onDelete: "cascade" }),
+    parentSpanId: text("parent_span_id"),
+    name: text("name").notNull(),
+    kind: text("kind").$type<"llm" | "tool">().notNull(),
+    status: text("status").$type<"ok" | "error">().notNull().default("ok"),
+    errorMessage: text("error_message"),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull(),
+    endedAt: timestamp("ended_at", { withTimezone: true }),
+    durationMs: integer("duration_ms"),
+    input: jsonb("input"),
+    output: jsonb("output"),
+    model: text("model"),
+    promptTokens: integer("prompt_tokens"),
+    completionTokens: integer("completion_tokens"),
+    totalTokens: integer("total_tokens"),
+    costUsd: numeric("cost_usd", { precision: 20, scale: 10 }),
+  },
+  (t) => [
+    index("spans_trace_started_idx").on(t.traceId, t.startedAt),
+  ],
 );
