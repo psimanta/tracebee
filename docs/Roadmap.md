@@ -6,7 +6,7 @@ Each week has a set of tasks with rough time estimates and a single exit
 criterion. When working a task, name it by number in the Claude Code prompt
 (e.g. "I'm on Task 1.2"). Don't skip ahead; order matters.
 
-> Weeks 1–4 finished ahead of calendar (Apr 29, 2026). The buffer has been
+> Weeks 1–5 finished ahead of calendar (Apr 29, 2026). The buffer has been
 > reallocated to extend Weeks 6–7 (hero screen) and Week 11 (polish). Ship
 > date unchanged.
 
@@ -62,11 +62,11 @@ the local ingest, and inserts correct rows in `traces` and `spans`.
 
 **Goal:** Alex can see his traces in the dashboard.
 
-- [ ] **5.1** Traces list page: paginated table, sort by started_at desc (2 hr)
-- [ ] **5.2** Columns: name, duration, status, span count, cost, started_at
-  (1 hr)
-- [ ] **5.3** Empty state + loading state (30 min)
-- [ ] **5.4** Basic filters: status, time range (1.5 hr)
+- [x] **5.1** Traces list page: paginated table, sort by started_at desc (2 hr) — done 2026-04-29
+- [x] **5.2** Columns: name, duration, status, span count, cost, started_at
+  (1 hr) — done 2026-04-29
+- [x] **5.3** Empty state + loading state (30 min) — done 2026-04-29
+- [x] **5.4** Basic filters: status, time range (1.5 hr) — done 2026-04-29
 
 **Exit criterion:** after running the test script a few times, the
 dashboard shows the traces in a sortable list.

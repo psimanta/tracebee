@@ -236,7 +236,14 @@ export default async function TracesPage({
                 : "—";
               return (
                 <tr key={r.id} className="border-b border-neutral-100">
-                  <td className="py-2 pr-4 font-medium">{r.name}</td>
+                  <td className="py-2 pr-4 font-medium">
+                    <Link
+                      href={`/dashboard/${projectId}/traces/${r.id}`}
+                      className="text-neutral-900 hover:underline"
+                    >
+                      {r.name}
+                    </Link>
+                  </td>
                   <td className="py-2 pr-4">
                     <span
                       className={
