@@ -87,6 +87,9 @@ importers:
       '@types/node':
         specifier: ^22.19.17
         version: 22.19.17
+      openai:
+        specifier: ^6.34.0
+        version: 6.34.0(zod@4.3.6)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
