@@ -15,8 +15,22 @@ export function TraceView({ spans }: { spans: Span[] }) {
   const selectedSpan = selectedIndex >= 0 ? spans[selectedIndex]! : spans[0]!;
 
   useEffect(() => {
-    const el = document.getElementById(`waterfall-row-${selectedId}`);
-    el?.scrollIntoView({ block: "nearest", behavior: "instant" });
+    const row = document.getElementById(`waterfall-row-${selectedId}`);
+    if (!row) return;
+    const scroller = row.closest<HTMLElement>("[data-waterfall-scroller]");
+    if (!scroller) return;
+
+    const rowRect = row.getBoundingClientRect();
+    const scrollerRect = scroller.getBoundingClientRect();
+    const STICKY_HEADER_H = 32;
+    const visibleTop = scrollerRect.top + STICKY_HEADER_H;
+    const visibleBottom = scrollerRect.bottom;
+
+    if (rowRect.top < visibleTop) {
+      scroller.scrollTop -= visibleTop - rowRect.top;
+    } else if (rowRect.bottom > visibleBottom) {
+      scroller.scrollTop += rowRect.bottom - visibleBottom;
+    }
   }, [selectedId]);
 
   const handleSelect = (id: string) => {
