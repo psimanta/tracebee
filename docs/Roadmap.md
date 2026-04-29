@@ -41,8 +41,8 @@ the span lands in Postgres, you can query it manually.
 
 - [x] **3.1** Scaffold `packages/sdk` in the monorepo (30 min) — done 2026-04-29
 - [x] **3.2** `traces` and `spans` tables in Drizzle, migration (1 hr) — done 2026-04-29
-- [ ] **3.3** `POST /v1/traces` route handler with Bearer auth, Zod
-  validation, upsert transaction (3 hr)
+- [x] **3.3** `POST /v1/traces` route handler with Bearer auth, Zod
+  validation, upsert transaction (3 hr) — done 2026-04-29
 - [ ] **3.4** SDK: `trace()` with AsyncLocalStorage, ULID generation,
   HTTP client, beforeExit drain (3 hr)
 - [ ] **3.5** SDK: `observeOpenAI()` proxy around chat.completions.create,
