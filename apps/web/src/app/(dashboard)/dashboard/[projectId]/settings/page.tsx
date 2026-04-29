@@ -38,7 +38,18 @@ export default async function SettingsPage({
       </Link>
 
       <h1 className="mt-4 text-xl font-semibold">{project.name}</h1>
-      <p className="mt-1 text-sm text-neutral-600">Settings · API keys</p>
+
+      <nav className="mt-3 flex gap-4 border-b border-neutral-200 text-sm">
+        <Link
+          href={`/dashboard/${projectId}/traces`}
+          className="-mb-px border-b-2 border-transparent pb-2 text-neutral-600 hover:text-neutral-900"
+        >
+          Traces
+        </Link>
+        <span className="-mb-px border-b-2 border-neutral-900 pb-2 font-medium text-neutral-900">
+          Settings
+        </span>
+      </nav>
 
       <section className="mt-8">
         <div className="flex items-center justify-between">

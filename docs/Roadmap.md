@@ -6,6 +6,10 @@ Each week has a set of tasks with rough time estimates and a single exit
 criterion. When working a task, name it by number in the Claude Code prompt
 (e.g. "I'm on Task 1.2"). Don't skip ahead; order matters.
 
+> Weeks 1–4 finished ahead of calendar (Apr 29, 2026). The buffer has been
+> reallocated to extend Weeks 6–7 (hero screen) and Week 11 (polish). Ship
+> date unchanged.
+
 ## Week 1 (Apr 27 – May 3): Foundation
 
 **Goal:** a signed-in user lands on an empty dashboard.
@@ -54,7 +58,7 @@ the span lands in Postgres, you can query it manually.
 **Exit criterion:** running a test script calls OpenAI, triggers a POST to
 the local ingest, and inserts correct rows in `traces` and `spans`.
 
-## Weeks 5 (May 25 – May 31): Traces list view
+## Week 5 (Apr 30 – May 10): Traces list view
 
 **Goal:** Alex can see his traces in the dashboard.
 
@@ -67,7 +71,7 @@ the local ingest, and inserts correct rows in `traces` and `spans`.
 **Exit criterion:** after running the test script a few times, the
 dashboard shows the traces in a sortable list.
 
-## Weeks 6–7 (Jun 1 – Jun 14): The hero screen — trace detail + waterfall
+## Weeks 6–7 (May 11 – Jun 7): The hero screen — trace detail + waterfall
 
 **Goal:** the feature the whole project is built around.
 
@@ -82,7 +86,7 @@ dashboard shows the traces in a sortable list.
 where the waterfall reads correctly at a glance and clicking a span
 reveals its full input/output.
 
-## Week 8 (Jun 15 – Jun 21): SDK polish + docs
+## Week 8 (Jun 8 – Jun 14): SDK polish + docs
 
 **Goal:** a stranger could actually install and use the SDK.
 
@@ -98,7 +102,7 @@ reveals its full input/output.
 **Exit criterion:** `npm install @yourname/sdk`, follow README, traces
 appear in production dashboard.
 
-## Week 9 (Jun 22 – Jun 28): Robustness pass
+## Week 9 (Jun 15 – Jun 21): Robustness pass
 
 **Goal:** the product doesn't fall over when used for real.
 
@@ -112,7 +116,7 @@ appear in production dashboard.
 **Exit criterion:** run an intentionally broken integration (bad key,
 malformed payload, oversize span) and get useful errors, not crashes.
 
-## Week 10 (Jun 29 – Jul 5): Second SDK feature + metadata
+## Week 10 (Jun 22 – Jun 28): Second SDK feature + metadata
 
 **Goal:** the product is useful beyond the default happy path.
 
@@ -124,7 +128,7 @@ malformed payload, oversize span) and get useful errors, not crashes.
 **Exit criterion:** an Anthropic-based agent integrates as easily as an
 OpenAI one, and metadata-based filtering works in the list.
 
-## Week 11 (Jul 6 – Jul 12): Polish
+## Week 11 (Jun 29 – Jul 12): Polish
 
 **Goal:** it looks like a real product, not a school project.
 
