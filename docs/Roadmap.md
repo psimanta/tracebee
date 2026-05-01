@@ -6,9 +6,9 @@ Each week has a set of tasks with rough time estimates and a single exit
 criterion. When working a task, name it by number in the Claude Code prompt
 (e.g. "I'm on Task 1.2"). Don't skip ahead; order matters.
 
-> Weeks 1–5 finished ahead of calendar (Apr 29, 2026). The buffer has been
-> reallocated to extend Weeks 6–7 (hero screen) and Week 11 (polish). Ship
-> date unchanged.
+> Weeks 1–7 finished ahead of calendar (Apr 30, 2026 — the hero screen
+> landed in one day rather than consuming the reallocated buffer). The
+> buffer is now banked for Week 11 (polish). Ship date unchanged.
 
 ## Week 1 (Apr 27 – May 3): Foundation
 
@@ -75,12 +75,12 @@ dashboard shows the traces in a sortable list.
 
 **Goal:** the feature the whole project is built around.
 
-- [ ] **6.1** `/traces/[traceId]` route, fetch trace + spans server-side (1 hr)
-- [ ] **6.2** Waterfall SVG: time axis, span rows, color coding (6 hr)
-- [ ] **6.3** Span detail panel: input, output, metadata, timing (3 hr)
-- [ ] **6.4** Click-to-select interaction, keyboard nav (2 hr)
-- [ ] **6.5** Edge cases: very long traces, very short spans, failed spans (2 hr)
-- [ ] **6.6** Self-review against hero-screen bar: does this look shippable? (1 hr)
+- [x] **6.1** `/traces/[traceId]` route, fetch trace + spans server-side (1 hr) — done 2026-04-30
+- [x] **6.2** Waterfall SVG: time axis, span rows, color coding (6 hr) — done 2026-04-30
+- [x] **6.3** Span detail panel: input, output, metadata, timing (3 hr) — done 2026-04-30
+- [x] **6.4** Click-to-select interaction, keyboard nav (2 hr) — done 2026-04-30
+- [x] **6.5** Edge cases: very long traces, very short spans, failed spans (2 hr) — done 2026-04-30
+- [x] **6.6** Self-review against hero-screen bar: does this look shippable? (1 hr) — done 2026-04-30
 
 **Exit criterion:** clicking any trace in the list opens a detail view
 where the waterfall reads correctly at a glance and clicking a span
