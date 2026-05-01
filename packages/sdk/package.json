@@ -1,8 +1,23 @@
 {
   "name": "@tracebee/sdk",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
   "description": "TypeScript SDK for Tracebee — observability for LLM agents",
+  "keywords": [
+    "llm",
+    "openai",
+    "observability",
+    "tracing",
+    "agents",
+    "telemetry"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psimanta/tracebee.git",
+    "directory": "packages/sdk"
+  },
+  "homepage": "https://github.com/psimanta/tracebee/tree/main/packages/sdk#readme",
+  "bugs": "https://github.com/psimanta/tracebee/issues",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,10 +32,14 @@
     "README.md",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm clean && pnpm build"
   },
   "engines": {
     "node": ">=20"
