@@ -90,7 +90,7 @@ reveals its full input/output.
 
 **Goal:** a stranger could actually install and use the SDK.
 
-- [ ] **8.1** Publish SDK to npm under a real name (1 hr)
+- [x] **8.1** Publish SDK to npm under a real name (1 hr) — done 2026-05-01
 - [ ] **8.2** SDK README: install, 5-line quickstart, API reference (2 hr)
 - [ ] **8.3** SDK error cases: 401 loud log, 4xx drop, 5xx drop, network
   errors (1.5 hr)
