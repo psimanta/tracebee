@@ -86,25 +86,30 @@ dashboard shows the traces in a sortable list.
 where the waterfall reads correctly at a glance and clicking a span
 reveals its full input/output.
 
-## Week 8 (Jun 8 – Jun 14): SDK polish + docs
+## Week 8 (Jun 8 – Jun 14): SDK polish + docs + CI
 
-**Goal:** a stranger could actually install and use the SDK.
+**Goal:** a stranger could actually install and use the SDK, with confidence
+that what's published is what's tested.
 
 - [x] **8.1** Publish SDK to npm under a real name (1 hr) — done 2026-05-01
 - [ ] **8.2** SDK README: install, 5-line quickstart, API reference (2 hr)
 - [ ] **8.3** SDK error cases: 401 loud log, 4xx drop, 5xx drop, network
   errors (1.5 hr)
-- [ ] **8.4** Manual end-to-end: install from npm in a fresh project,
-  integrate, confirm traces appear (1 hr)
+- [x] **8.4** Manual end-to-end: install from npm in a fresh project,
+  integrate, confirm traces appear (1 hr) — done 2026-05-09
 - [ ] **8.5** First real tests: SDK unit tests for trace/tool context
   propagation (2 hr)
+- [ ] **8.6** GitHub Actions workflow: lint + test on PR for both SDK and
+  app; required check on main branch (45 min)
 
 **Exit criterion:** `npm install @yourname/sdk`, follow README, traces
-appear in production dashboard.
+appear in production dashboard. Every PR runs tests automatically and
+can't merge if they fail.
 
-## Week 9 (Jun 15 – Jun 21): Robustness pass
+## Week 9 (Jun 15 – Jun 21): Robustness pass + Dockerfile
 
-**Goal:** the product doesn't fall over when used for real.
+**Goal:** the product doesn't fall over when used for real, and it can
+be deployed anywhere — not just Vercel.
 
 - [ ] **9.1** Ingest: reject malformed payloads clearly, log request IDs (1.5 hr)
 - [ ] **9.2** Dashboard: handle large traces (100+ spans) without layout
@@ -112,9 +117,14 @@ appear in production dashboard.
 - [ ] **9.3** Dashboard: handle jsonb input/output rendering (collapsible,
   truncate very large values) (2 hr)
 - [ ] **9.4** Revoke key flow: UI + server action + ingest check (1 hr)
+- [ ] **9.5** Dockerfile for the Next.js app (multi-stage build, non-root
+  user, small final image); verify it builds and runs locally with the
+  right env vars; document in README (1.5 hr)
 
 **Exit criterion:** run an intentionally broken integration (bad key,
 malformed payload, oversize span) and get useful errors, not crashes.
+Anyone with Docker installed can `docker build` and `docker run` the
+app from a clean machine.
 
 ## Week 10 (Jun 22 – Jun 28): Second SDK feature + metadata
 
@@ -148,8 +158,10 @@ OpenAI one, and metadata-based filtering works in the list.
   (ongoing through the week)
 - [ ] **12.2** Main README: what it is, screenshots, how it works,
   architecture diagram (3 hr)
-- [ ] **12.3** Phase 2 writeup: ClickHouse migration plan in
-  `docs/phase-2.md` (2 hr)
+- [ ] **12.3** Phase 2 plan in `docs/phase-2.md`: ClickHouse migration,
+  Terraform/IaC for AWS or GCP deployment, full CI/CD pipeline with
+  staging, observability instrumentation (eat-your-own-dogfood with
+  tracebee or OpenTelemetry), open-source readiness (2 hr)
 - [ ] **12.4** Tag v0.1.0, announce (if announcing at all) (1 hr)
 
 **Exit criterion:** July 19. Ship. Stop adding features.
@@ -171,4 +183,6 @@ Pre-committed cuts, in drop order:
 5. Filters in list view (Week 5)
 
 Do not cut: the SDK, the ingest endpoint, the trace list, the hero
-waterfall. That is the MVP.
+waterfall, the GitHub Actions CI (8.6), the Dockerfile (9.5). That is
+the MVP — and the CI + Docker are now part of "shippable" credibility,
+not optional polish.

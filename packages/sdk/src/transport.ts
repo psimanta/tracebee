@@ -79,6 +79,7 @@ export function flushTrace(ctx: TraceContext, endedAt: Date, config: Config): vo
 }
 
 async function postTrace(payload: WirePayload, config: Config): Promise<void> {
+  const traceId = payload.trace.id;
   try {
     const res = await fetch(`${config.baseUrl}/v1/traces`, {
       method: "POST",
@@ -89,19 +90,43 @@ async function postTrace(payload: WirePayload, config: Config): Promise<void> {
       body: JSON.stringify(payload),
     });
 
+    if (res.ok) return;
+
     if (res.status === 401) {
       console.error(
-        "[tracebee] 401 Unauthorized — check TRACEBEE_API_KEY. Trace dropped.",
+        `[tracebee] 401 Unauthorized — check TRACEBEE_API_KEY. Trace dropped (id=${traceId}).`,
       );
       return;
     }
-    if (!res.ok) {
+
+    if (res.status >= 400 && res.status < 500) {
+      const body = await readBodyForLog(res);
+      const suffix = body ? `: ${body}` : "";
       console.warn(
-        `[tracebee] ingest returned ${res.status}, trace dropped (id=${payload.trace.id})`,
+        `[tracebee] ingest rejected payload (${res.status}), trace dropped (id=${traceId})${suffix}`,
       );
+      return;
     }
+
+    console.warn(
+      `[tracebee] ingest server error (${res.status}), trace dropped (id=${traceId})`,
+    );
   } catch (err) {
-    console.warn("[tracebee] network error posting trace, dropped:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(
+      `[tracebee] network error posting trace, dropped (id=${traceId}): ${msg}`,
+      err,
+    );
+  }
+}
+
+async function readBodyForLog(res: Response): Promise<string> {
+  try {
+    const text = (await res.text()).trim();
+    if (!text) return "";
+    return text.length > 500 ? `${text.slice(0, 500)}…` : text;
+  } catch {
+    return "";
   }
 }
 
