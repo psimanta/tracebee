@@ -92,13 +92,13 @@ reveals its full input/output.
 that what's published is what's tested.
 
 - [x] **8.1** Publish SDK to npm under a real name (1 hr) — done 2026-05-01
-- [ ] **8.2** SDK README: install, 5-line quickstart, API reference (2 hr)
-- [ ] **8.3** SDK error cases: 401 loud log, 4xx drop, 5xx drop, network
-  errors (1.5 hr)
+- [x] **8.2** SDK README: install, 5-line quickstart, API reference (2 hr) — done 2026-05-07
+- [x] **8.3** SDK error cases: 401 loud log, 4xx drop, 5xx drop, network
+  errors (1.5 hr) — done 2026-05-07
 - [x] **8.4** Manual end-to-end: install from npm in a fresh project,
   integrate, confirm traces appear (1 hr) — done 2026-05-09
-- [ ] **8.5** First real tests: SDK unit tests for trace/tool context
-  propagation (2 hr)
+- [x] **8.5** First real tests: SDK unit tests for trace/tool context
+  propagation (2 hr) — done 2026-05-10
 - [ ] **8.6** GitHub Actions workflow: lint + test on PR for both SDK and
   app; required check on main branch (45 min)
 
