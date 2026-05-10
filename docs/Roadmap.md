@@ -99,8 +99,8 @@ that what's published is what's tested.
   integrate, confirm traces appear (1 hr) — done 2026-05-09
 - [x] **8.5** First real tests: SDK unit tests for trace/tool context
   propagation (2 hr) — done 2026-05-10
-- [ ] **8.6** GitHub Actions workflow: lint + test on PR for both SDK and
-  app; required check on main branch (45 min)
+- [x] **8.6** GitHub Actions workflow: lint + test on PR for both SDK and
+  app; required check on main branch (45 min) — done 2026-05-10
 
 **Exit criterion:** `npm install @yourname/sdk`, follow README, traces
 appear in production dashboard. Every PR runs tests automatically and
