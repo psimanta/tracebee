@@ -3,6 +3,7 @@ import { loadEnvConfig } from "@next/env";
 loadEnvConfig(process.cwd());
 
 async function main() {
+  const name = ''
   const { count } = await import("drizzle-orm");
   const { db } = await import("../src/db/client");
   const { accounts, sessions, users } = await import("../src/db/schema");
