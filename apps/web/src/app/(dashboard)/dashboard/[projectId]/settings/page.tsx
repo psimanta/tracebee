@@ -3,8 +3,9 @@ import { and, desc, eq, isNull } from "drizzle-orm";
 import { db } from "@/db/client";
 import { apiKeys } from "@/db/schema";
 import { requireProjectAccess } from "@/lib/access";
-import { createApiKey } from "./actions";
+import { createApiKey, revokeApiKey } from "./actions";
 import { GenerateKey } from "./generate-key";
+import { RevokeKey } from "./revoke-key";
 
 export default async function SettingsPage({
   params,
@@ -27,6 +28,7 @@ export default async function SettingsPage({
     .orderBy(desc(apiKeys.createdAt));
 
   const createForThisProject = createApiKey.bind(null, projectId);
+  const revokeForThisProject = revokeApiKey.bind(null, projectId);
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -66,12 +68,19 @@ export default async function SettingsPage({
             {keys.map((k) => (
               <li
                 key={k.id}
-                className="flex items-center justify-between py-3"
+                className="flex items-center justify-between gap-4 py-3"
               >
                 <code className="text-sm">{k.keyPrefix}…</code>
-                <span className="text-xs text-neutral-500">
-                  {k.createdAt.toLocaleDateString()}
-                </span>
+                <div className="flex items-center gap-4">
+                  <span className="text-xs text-neutral-500">
+                    {k.createdAt.toLocaleDateString()}
+                  </span>
+                  <RevokeKey
+                    action={revokeForThisProject}
+                    keyId={k.id}
+                    keyPrefix={k.keyPrefix}
+                  />
+                </div>
               </li>
             ))}
           </ul>

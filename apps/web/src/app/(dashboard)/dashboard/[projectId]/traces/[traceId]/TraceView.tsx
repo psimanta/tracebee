@@ -13,6 +13,7 @@ export function TraceView({ spans }: { spans: Span[] }) {
 
   const selectedIndex = spans.findIndex((s) => s.id === selectedId);
   const selectedSpan = selectedIndex >= 0 ? spans[selectedIndex]! : spans[0]!;
+  const errorSpans = spans.filter((s) => s.status === "error");
 
   useEffect(() => {
     const row = document.getElementById(`waterfall-row-${selectedId}`);
@@ -38,6 +39,13 @@ export function TraceView({ spans }: { spans: Span[] }) {
     wrapperRef.current?.focus();
   };
 
+  const jumpToNextError = () => {
+    if (errorSpans.length === 0) return;
+    const currentErrorIdx = errorSpans.findIndex((s) => s.id === selectedId);
+    const nextIdx = (currentErrorIdx + 1) % errorSpans.length;
+    handleSelect(errorSpans[nextIdx]!.id);
+  };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -58,6 +66,21 @@ export function TraceView({ spans }: { spans: Span[] }) {
         onKeyDown={handleKeyDown}
         className="rounded outline-none focus-visible:ring-2 focus-visible:ring-blue-500 lg:sticky lg:top-4 lg:flex-1 lg:min-w-0"
       >
+        {errorSpans.length > 0 ? (
+          <div className="mb-2 flex items-center justify-between text-xs">
+            <span className="text-red-600">
+              {errorSpans.length}{" "}
+              {errorSpans.length === 1 ? "error" : "errors"}
+            </span>
+            <button
+              type="button"
+              onClick={jumpToNextError}
+              className="rounded border border-red-200 px-2 py-1 text-red-700 hover:bg-red-50"
+            >
+              Jump to {errorSpans.length === 1 ? "error" : "next error"} →
+            </button>
+          </div>
+        ) : null}
         <Waterfall
           spans={spans}
           selectedId={selectedId}
