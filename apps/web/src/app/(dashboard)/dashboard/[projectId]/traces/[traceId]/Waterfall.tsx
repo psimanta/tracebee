@@ -56,7 +56,7 @@ export function Waterfall({
 
   return (
     <div
-      className="max-h-[600px] overflow-auto rounded border border-neutral-200"
+      className="max-h-[calc(100vh-10rem)] min-h-[20rem] overflow-auto rounded border border-neutral-200"
       data-waterfall-scroller
     >
       <div style={{ width: TOTAL_WIDTH }}>

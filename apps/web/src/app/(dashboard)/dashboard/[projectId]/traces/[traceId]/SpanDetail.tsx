@@ -1,12 +1,8 @@
 import type { spans } from "@/db/schema";
 import { formatCost, formatDuration, formatTimestamp } from "@/lib/format";
+import { JsonView } from "./JsonView";
 
 type Span = typeof spans.$inferSelect;
-
-function formatJson(value: unknown): string {
-  if (value === null || value === undefined) return "—";
-  return JSON.stringify(value, null, 2);
-}
 
 function formatTokenCount(n: number | null): string {
   return n === null ? "—" : n.toLocaleString();
@@ -59,15 +55,11 @@ export function SpanDetail({ span }: { span: Span }) {
       ) : null}
 
       <Section title="Input">
-        <pre className="max-h-96 overflow-auto rounded bg-neutral-50 p-3 font-mono text-xs text-neutral-800">
-          {formatJson(span.input)}
-        </pre>
+        <JsonView value={span.input} />
       </Section>
 
       <Section title="Output">
-        <pre className="max-h-96 overflow-auto rounded bg-neutral-50 p-3 font-mono text-xs text-neutral-800">
-          {formatJson(span.output)}
-        </pre>
+        <JsonView value={span.output} />
       </Section>
 
       <Section title="Metadata">
