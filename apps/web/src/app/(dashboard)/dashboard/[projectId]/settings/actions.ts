@@ -1,6 +1,7 @@
 "use server";
 
 import { randomBytes, createHash } from "node:crypto";
+import { and, eq, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db/client";
 import { apiKeys } from "@/db/schema";
@@ -24,4 +25,24 @@ export async function createApiKey(
 
   revalidatePath(`/dashboard/${projectId}/settings`);
   return { rawKey };
+}
+
+export async function revokeApiKey(
+  projectId: string,
+  keyId: string,
+): Promise<void> {
+  await requireProjectAccess(projectId);
+
+  await db
+    .update(apiKeys)
+    .set({ revokedAt: new Date() })
+    .where(
+      and(
+        eq(apiKeys.id, keyId),
+        eq(apiKeys.projectId, projectId),
+        isNull(apiKeys.revokedAt),
+      ),
+    );
+
+  revalidatePath(`/dashboard/${projectId}/settings`);
 }

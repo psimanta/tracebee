@@ -111,15 +111,15 @@ can't merge if they fail.
 **Goal:** the product doesn't fall over when used for real, and it can
 be deployed anywhere — not just Vercel.
 
-- [ ] **9.1** Ingest: reject malformed payloads clearly, log request IDs (1.5 hr)
-- [ ] **9.2** Dashboard: handle large traces (100+ spans) without layout
-  breakage (2 hr)
-- [ ] **9.3** Dashboard: handle jsonb input/output rendering (collapsible,
-  truncate very large values) (2 hr)
-- [ ] **9.4** Revoke key flow: UI + server action + ingest check (1 hr)
-- [ ] **9.5** Dockerfile for the Next.js app (multi-stage build, non-root
+- [x] **9.1** Ingest: reject malformed payloads clearly, log request IDs (1.5 hr) — done 2026-05-16
+- [x] **9.2** Dashboard: handle large traces (100+ spans) without layout
+  breakage (2 hr) — done 2026-05-16
+- [x] **9.3** Dashboard: handle jsonb input/output rendering (collapsible,
+  truncate very large values) (2 hr) — done 2026-05-23
+- [x] **9.4** Revoke key flow: UI + server action + ingest check (1 hr) — done 2026-05-24
+- [x] **9.5** Dockerfile for the Next.js app (multi-stage build, non-root
   user, small final image); verify it builds and runs locally with the
-  right env vars; document in README (1.5 hr)
+  right env vars; document in README (1.5 hr) — done 2026-06-02
 
 **Exit criterion:** run an intentionally broken integration (bad key,
 malformed payload, oversize span) and get useful errors, not crashes.
